@@ -87,7 +87,7 @@
                         channel: "WEB",
                         language: "EN",
                         currency: "EUR",
-                        BOXEVER_POINT_OF_SALE: BOXEVER_POINT_OF_SALE,
+                        pos: BOXEVER_POINT_OF_SALE,
                         type: "FORCE_CLOSE",
                         _bx_extended_message: "1"
                     };
