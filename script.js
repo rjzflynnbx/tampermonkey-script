@@ -78,7 +78,7 @@
         var evtobj = window.event ? event : e
 
 
-        // Close session
+        // CTRL + C  = Close session
         if (evtobj.keyCode == 67 && evtobj.ctrlKey) {
             if (confirm('CLOSE SESSION?')) {
                 _boxeverq.push(function () {
@@ -98,7 +98,7 @@
 
 
         }
-        // Start as anon
+        //  CTRL + A  = Start as anon
         if (evtobj.keyCode == 65 && evtobj.ctrlKey) {
             if (confirm('START AS ANONYMOUS?')) {
                 _boxeverq.push(function () {
