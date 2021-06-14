@@ -99,14 +99,14 @@
 
         }
         // Start as anon
-        // if (evtobj.keyCode == 65 && evtobj.ctrlKey) {
-        //     if (confirm('START AS ANONYMOUS?')) {
-        //         _boxeverq.push(function () {
-        //             Boxever.reset();
-        //         });
-        //         location.reload();
-        //     }
-        // }
+        if (evtobj.keyCode == 65 && evtobj.ctrlKey) {
+            if (confirm('START AS ANONYMOUS?')) {
+                _boxeverq.push(function () {
+                    Boxever.reset();
+                });
+                location.reload();
+            }
+        }
     }
     if (ENABLE_KEYBOARD_SHORTCUTS) {
         document.onkeydown = KeyPress;
