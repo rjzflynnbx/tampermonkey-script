@@ -4,7 +4,7 @@
 // @version      0.1
 // @description  Generic Load Boxever Tampermonkey scripts
 // @author       Richard Flynn
-// @match        
+// @match        http://example.com/*
 // @grant        none
 // ==/UserScript==
 
