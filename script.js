@@ -53,7 +53,7 @@
             "language": "EN",
             "currency": "EUR",
             "page": window.location.pathname + window.location.search,
-            "pos": POS,
+            "pos": BOXEVER_POINT_OF_SALE,
             "session_data": { "uri": window.location.pathname }
         };
         Boxever.eventCreate(viewEvent, function (data) { }, 'json');
