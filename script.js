@@ -83,7 +83,7 @@
             if (confirm('CLOSE SESSION?')) {
                 _boxeverq.push(function () {
                     var closeSessionEvent = {
-                        browser_id: BID,
+                        browser_id: Boxever.getID(),
                         channel: "WEB",
                         language: "EN",
                         currency: "EUR",
