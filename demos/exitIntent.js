@@ -1,10 +1,10 @@
 // ==UserScript==
-// @name Sitecore CDP base script
+// @name Sitecore Anon User Demo
 // @namespace http://tampermonkey.net/
 // @version 0.2
 // @description Generic Load Sitecore CDP Tampermonkey scripts
-// @author Brian Bishop
-// @match https://www.jaguarusa.com/*
+// @author Richard Flynn
+// @match https://littlewoodsireland.ie/*
 // @grant  none
 // ==/UserScript==
 
@@ -16,7 +16,7 @@
     const SITECORECDP_API_TARGET = "https://api.boxever.com/v1.2"; //  do not change
     const SITECORECDP_WEB_FLOW_TARGET = "https://d35vb5cccm4xzp.cloudfront.net"; //  do not change
     const SITECORECDP_JS_LIB_SRC = "https://d1mj578wat5n4o.cloudfront.net/boxever-1.4.1.min.js"; //  do not change
-    const SITECORECDP_COOKIE_DOMAIN = '.jaguarusa.com'; //replace TLD with your client/prospect
+    const SITECORECDP_COOKIE_DOMAIN = '';
     const CURRENCY = "USD";
 
     //Script settings
@@ -104,82 +104,6 @@
                 });
                 location.reload();
             }
-        }
-
-        // CTRL + I send identity event
-        if (evtobj.keyCode == 73 && evtobj.ctrlKey) {
-            console.log('identity event begin');
-            _boxeverq.push(function() {
-                var identityEvent = {
-                    "browser_id": Boxever.getID(),
-                    "channel": "WEB",
-                    "type": "IDENTITY",
-                    "language": "EN",
-                    "currency": CURRENCY,
-                    "page": window.location.pathname,
-                    "pos": SITECORECDP_POINT_OF_SALE,
-                    "firstname": IDENTITY_FNAME,
-                    "lastname": IDENTITY_LNAME,
-                    "email" : IDENTITY_EMAIL,
-                    "phoneNumber" : [IDENTITY_PHONE],
-                    "identifiers": [{
-                        "provider": IDENTITY_PROVIDER,
-                        "id": IDENTITY_ID
-                    }]
-                };
-                identityEvent = Boxever.addUTMParams(identityEvent);
-                Boxever.eventCreate(identityEvent, function(data){}, 'json');
-            });
-
-        }
-        // custom event 0
-        if (evtobj.keyCode == 48 && evtobj.ctrlKey) {
-            _boxeverq.push(function() {
-                var customEvent = {
-                    "browser_id": Boxever.getID(),
-                    "channel": "WEB",
-                    "type": "CE-0",
-                    "language": "EN",
-                    "page": window.location.pathname,
-                    "pos": SITECORECDP_POINT_OF_SALE
-                };
-                customEvent = Boxever.addUTMParams(customEvent);
-                Boxever.eventCreate(customEvent, function(data){}, 'json');
-                console.log('trigger_ce_0');
-
-            });
-        }
-        // custom event 1
-        if (evtobj.keyCode == 49 && evtobj.ctrlKey) {
-             _boxeverq.push(function() {
-                var customEvent = {
-                    "browser_id": Boxever.getID(),
-                    "channel": "WEB",
-                    "type": "CE-1",
-                    "language": "EN",
-                    "page": window.location.pathname,
-                    "pos": SITECORECDP_POINT_OF_SALE
-                };
-                customEvent = Boxever.addUTMParams(customEvent);
-                Boxever.eventCreate(customEvent, function(data){}, 'json');
-            });
-            console.log('trigger_ce_1');
-        }
-        // CTRL + 2 - custom event 2 - control-2 sends a personalized text message to IDENTITY_PHONE
-        if (evtobj.keyCode == 50 && evtobj.ctrlKey) {
-            _boxeverq.push(function() {
-                var customEvent = {
-                    "browser_id": Boxever.getID(),
-                    "channel": "WEB",
-                    "type": "CE-2",
-                    "language": "EN",
-                    "page": window.location.pathname,
-                    "pos": SITECORECDP_POINT_OF_SALE
-                };
-                customEvent = Boxever.addUTMParams(customEvent);
-                Boxever.eventCreate(customEvent, function(data){}, 'json');
-                console.log('trigger_ce_2');
-            });
         }
 
     }
