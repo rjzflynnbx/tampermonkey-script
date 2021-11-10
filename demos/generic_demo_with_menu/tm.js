@@ -4,8 +4,7 @@
 // @version      0.1
 // @description  try to take over the world!
 // @author       You
-// @match        https://www.littlewoodsireland.ie/*
-// @match        https://www.vail.com/*
+// @match        https://www.example.com/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        GM_addStyle
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js
@@ -18,11 +17,11 @@
     'use strict';
 
 
-    // Client keys (do not change)    
+    // Client keys (do not change)
     const PARTNER_SANDBOX_CLIENT_KEY = "psfu6uh05hsr9c34rptlr06dn864cqrx"
     const SPINSHOP_CLIENT_KEY = "pqsSIOPAxhMC9zJLJSZNFURPNqALIFwd"
 
-    // Points of sale (do not change)    
+    // Points of sale (do not change)
     const PARTNER_SANDBOX_DEFAULT_POS = "pos-demo";
     const SPINSHOP_DEFAULT_POS = "spinshop.com";
 
