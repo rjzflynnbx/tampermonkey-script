@@ -16,12 +16,29 @@
 
 (function () {
     'use strict';
+
+
+    // Client keys (do not change)    
+    const PARTNER_SANDBOX_CLIENT_KEY = "psfu6uh05hsr9c34rptlr06dn864cqrx"
+    const SPINSHOP_CLIENT_KEY = "pqsSIOPAxhMC9zJLJSZNFURPNqALIFwd"
+
+    // Points of sale (do not change)    
+    const PARTNER_SANDBOX_DEFAULT_POS = "pos-demo";
+    const SPINSHOP_DEFAULT_POS = "spinshop.com";
+
+    // Start Demo Settings -----------------------------------------------------------------------------------------------
+    const BOXEVER_CLIENT_KEY = PARTNER_SANDBOX_CLIENT_KEY;
+    const BOXEVER_POINT_OF_SALE = PARTNER_SANDBOX_DEFAULT_POS;
+    const SHOW_TOAST_ON_PAGE_VIEW_EVENT = true;
+    // End Demo Settings -------------------------------------------------------------------------------------------------
+
+
+
     //Boxever settings
-    const BOXEVER_CLIENT_KEY = "pqsSIOPAxhMC9zJLJSZNFURPNqALIFwd";
-    const BOXEVER_POINT_OF_SALE = "spinshop.com";
     const BOXEVER_API_TARGET = `https://api.boxever.com/v1.2`;
     const BOXEVER_WEB_FLOW_TARGET = "https://d35vb5cccm4xzp.cloudfront.net";
     const BOXEVER_JS_LIB_SRC = 'https://d1mj578wat5n4o.cloudfront.net/boxever-1.4.1.min.js';
+
 
 
     unsafeWindow._boxever_settings = {
@@ -71,10 +88,13 @@
             }
         })
 
-        Toast.fire({
-            icon: 'success',
-            title: 'Sent View Event to Sitecore CDP '
-        })
+        if (SHOW_TOAST_ON_PAGE_VIEW_EVENT) {
+            Toast.fire({
+                icon: 'success',
+                title: 'Sent VIEW Event to Sitecore CDP '
+            })
+        }
+
     }
 
     function delayUntilBrowserIdIsAvailable(functionToDelay) {
@@ -95,9 +115,10 @@
         $('head').append('<link rel="stylesheet" href="' + url + '" type="text/css" />');
     }
     injectStylesheet("https://cdn.jsdelivr.net/npm/offside-js@1.4.0/dist/offside.css");
-    var htmlStr = "  <button style=\"display:none\" type=\"button\" id=\"my-button\">Offside toggle<\/button>  <nav id=\"my-menu\"> <img style=\"max-width: 85%; margin-bottom:1em;margin-left: 0.8em;\" src=\"https://sitecorecdn.azureedge.net/-/media/sitecoresite/images/global/logo/sitecore-logo.svg?la=en&hash=2134EC93C845A2DAC7C816F011AA5C52\" tabindex=\"-1\" alt=\"Sitecore Logo\"> <ul> <li id=\"browsingAsBtn\"><a  style=\"color:white\" href=\"#\">Currently browsing as<\/a><\/li>    <li id=\"startAsAnonBtn\"><a style=\"color:white\" href=\"#\">Start as Anon<\/a><\/li>   <li id=\"closeSessionBtn\"><a style=\"color:white\" href=\"#\">Close Session<\/a><\/li>    <li id=\"identifyBtn\" ><a style=\"color:white\" href=\"#\">Identify<\/a><\/li> <li id=\"sendEventBtn\" ><a style=\"color:white\" href=\"#\">Send Event<\/a><\/li> <li id=\"addDataExtBtn\" ><a style=\"color:white\" href=\"#\">Add Data Extension<\/a><\/li> <\/ul>  <\/nav>  <!-- Your Content -->  <div id=\"my-content-container\">    <\/div>";
+    var htmlStr = "  <button style=\"display:none\" type=\"button\" id=\"my-button\">Offside toggle<\/button>  <nav id=\"my-menu\"> <img style=\"max-width: 85%; margin-bottom:1em;margin-left: 0.8em;\" src=\"https://sitecorecdn.azureedge.net/-/media/sitecoresite/images/global/logo/sitecore-logo.svg?la=en&hash=2134EC93C845A2DAC7C816F011AA5C52\" tabindex=\"-1\" alt=\"Sitecore Logo\"> <ul> <li id=\"browsingAsBtn\"><a  style=\"color:white\" href=\"#\">CDP Guest Profile<\/a><\/li>    <li id=\"startAsAnonBtn\"><a style=\"color:white\" href=\"#\">Start as Anon<\/a><\/li>   <li id=\"closeSessionBtn\"><a style=\"color:white\" href=\"#\">Close Session<\/a><\/li>    <li id=\"identifyBtn\" ><a style=\"color:white\" href=\"#\">Identify<\/a><\/li> <li id=\"sendEventBtn\" ><a style=\"color:white\" href=\"#\">Send Event<\/a><\/li> <\/ul>  <\/nav>  <!-- Your Content -->  <div id=\"my-content-container\">    <\/div>";
     var element = document.getElementsByTagName("body")[0];
     element.insertAdjacentHTML('afterbegin', htmlStr);
+    // <li id=\"addDataExtBtn\" ><a style=\"color:white\" href=\"#\">Add Data Extension<\/a><\/li>
 
     var myOffside = offside('#my-menu', {
 
@@ -129,39 +150,15 @@
     document.onkeydown = KeyPress;
 
     // START menu button listners *********************************************
-
     $("#identifyBtn").click(async function () {
 
-        // const { value: email } = await Swal.fire({
-        //     input: 'email',
-        //     inputLabel: 'Send an Identity Event',
-        //     inputPlaceholder: 'Enter the email identifier',
-        //     showCancelButton: true,
-        //     html: `<input type="text" id="login" class="swal2-input" placeholder="Username">
-        //             <input type="password" id="password" class="swal2-input" placeholder="Password">`,
-        // })
-        // if (email) {
-        //     var identifyEvent = {
-        //         "browser_id": Boxever.getID(),
-        //         "channel": "WEB",
-        //         "type": "IDENTITY",
-        //         "language": "EN",
-        //         "currency": "USD",
-        //         "page": "CHEKOUT",
-        //         "pos": BOXEVER_POINT_OF_SALE,
-        //         "email": email,
-        //         "firstname": "fname",
-        //         "lastname": "lname"
-        //     };
-        //     Boxever.eventCreate(identifyEvent, function (data) { }, 'json');
-        //     Swal.fire(`identified as: ${email}`)
-        // }
         Swal.fire({
             title: 'Send Identity Event',
             html: `<input type="text" id="bxEmail" class="swal2-input" placeholder="email">
                 <input type="text" id="bxFname" class="swal2-input" placeholder="first name">
                 <input type="text" id="bxLname" class="swal2-input" placeholder="last name">`,
             confirmButtonText: 'Send Identity Event',
+            confirmButtonColor: '#19a5a2',
             focusConfirm: false,
             showCancelButton: true,
             preConfirm: () => {
@@ -172,25 +169,26 @@
             }
         }).then((result) => {
             const email = Swal.getPopup().querySelector('#bxEmail').value;
-            const fname = Swal.getPopup().querySelector('#bxFname').value
-            const lname = Swal.getPopup().querySelector('#bxLname').value
-            var identifyEvent = {
-                "browser_id": Boxever.getID(),
-                "channel": "WEB",
-                "type": "IDENTITY",
-                "language": "EN",
-                "currency": "USD",
-                "page": "CHEKOUT",
-                "pos": BOXEVER_POINT_OF_SALE,
-                "email": email,
-                "firstname": fname,
-                "lastname": lname
-            };
-            Boxever.eventCreate(identifyEvent, function (data) { }, 'json');
-            Swal.fire(`identified as: ${email}`)
+            const fname = Swal.getPopup().querySelector('#bxFname').value;
+            const lname = Swal.getPopup().querySelector('#bxLname').value;
 
+            if (email != null && email != undefined && email != "undefined" && email != "") {
+                var identifyEvent = {
+                    "browser_id": Boxever.getID(),
+                    "channel": "WEB",
+                    "type": "IDENTITY",
+                    "language": "EN",
+                    "currency": "USD",
+                    "page": "CHEKOUT",
+                    "pos": BOXEVER_POINT_OF_SALE,
+                    "email": email,
+                    "firstname": fname,
+                    "lastname": lname
+                };
+                Boxever.eventCreate(identifyEvent, function (data) { }, 'json');
+                Swal.fire(`identified as: ${email}`)
+            }
         })
-
     });
 
     $("#addDataExtBtn").click(async function () {
@@ -235,6 +233,7 @@
             confirmButtonText: 'Send Event',
             focusConfirm: false,
             showCancelButton: true,
+            confirmButtonColor: '#19a5a2',
             preConfirm: () => {
                 const eventType = Swal.getPopup().querySelector('#eventType').value
                 const kv1 = Swal.getPopup().querySelector('#kv1').value
@@ -244,13 +243,13 @@
                 return { eventType: eventType, kv1: kv1 }
             }
         }).then((result) => {
-            const kv1 = Swal.getPopup().querySelector('#kv1').value;
+            const kv1 = Swal.getPopup().querySelector('#kv1').value.trim();
             const kv1_values = kv1.split(",");
 
-            const kv2 = Swal.getPopup().querySelector('#kv2').value;
+            const kv2 = Swal.getPopup().querySelector('#kv2').value.trim();
             const kv2_values = kv2.split(",");
 
-            const kv3 = Swal.getPopup().querySelector('#kv3').value;
+            const kv3 = Swal.getPopup().querySelector('#kv3').value.trim();
             const kv3_values = kv3.split(",");
 
             var bxEvent = {
@@ -265,13 +264,13 @@
 
             };
             if (kv1 != null && kv1 != undefined && kv1 != "undefeined") {
-                bxEvent[kv1_values[0]] = kv1_values[1];
+                bxEvent[kv1_values[0].trim()] = kv1_values[1].trim();
             }
             if (kv2 != null && kv2 != undefined && kv2 != "undefeined") {
-                bxEvent[kv2_values[0]] = kv2_values[1];
+                bxEvent[kv2_values[0].trim()] = kv2_values[1].trim();
             }
             if (kv3 != null && kv3 != undefined && kv3 != "undefeined") {
-                bxEvent[kv3_values[0]] = kv3_values[1];
+                bxEvent[kv3_values[0].trim()] = kv3_values[1].trim();
             }
 
             Boxever.eventCreate(bxEvent, function (data) { }, 'json');
@@ -316,10 +315,10 @@
         Swal.fire({
             title: 'Close session?',
             text: "This will end the ongoing CDP session...",
-            icon: 'warning',
+            icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#19a5a2',
-            cancelButtonColor: '#232323',
+            // cancelButtonColor: '#232323',
             confirmButtonText: 'Yes, close the session'
         }).then((result) => {
             if (result.isConfirmed) {
@@ -350,11 +349,11 @@
 
         Swal.fire({
             title: 'Start a new anonymous session?',
-            text: "This will reload the page...",
-            icon: 'warning',
+            //text: "This will reload the page...",
+            icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#19a5a2',
-            cancelButtonColor: '#232323',
+            // cancelButtonColor: '#232323',
             confirmButtonText: 'Yes, start a new anonymous session'
         }).then((result) => {
             if (result.isConfirmed) {
@@ -378,7 +377,6 @@
         })
 
     });
-
     // END menu button listners *********************************************
 
 })();
