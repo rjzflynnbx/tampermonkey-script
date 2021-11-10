@@ -148,6 +148,13 @@
     }
     document.onkeydown = KeyPress;
 
+    function isv2DataModel() {
+        if (BOXEVER_CLIENT_KEY === PARTNER_SANDBOX_CLIENT_KEY) {
+            return true;
+        }
+        return false;
+    }
+
     // START menu button listners *********************************************
     $("#identifyBtn").click(async function () {
 
@@ -172,18 +179,40 @@
             const lname = Swal.getPopup().querySelector('#bxLname').value;
 
             if (email != null && email != undefined && email != "undefined" && email != "") {
-                var identifyEvent = {
-                    "browser_id": Boxever.getID(),
-                    "channel": "WEB",
-                    "type": "IDENTITY",
-                    "language": "EN",
-                    "currency": "USD",
-                    "page": "CHEKOUT",
-                    "pos": BOXEVER_POINT_OF_SALE,
-                    "email": email,
-                    "firstname": fname,
-                    "lastname": lname
-                };
+
+                var identifyEvent = {};
+                if (isv2DataModel()) {
+                    identifyEvent = {
+                        "browser_id": Boxever.getID(),
+                        "channel": "WEB",
+                        "type": "IDENTITY",
+                        "language": "EN",
+                        "currency": "USD",
+                        "page": "CHEKOUT",
+                        "pos": BOXEVER_POINT_OF_SALE,
+                        "email": email,
+                        "firstname": fname,
+                        "lastname": lname,
+                        "identifiers": [{
+                            "provider": "BXEMAIL",
+                            "id": email
+                        }]
+                    };
+                } else {
+                    identifyEvent = {
+                        "browser_id": Boxever.getID(),
+                        "channel": "WEB",
+                        "type": "IDENTITY",
+                        "language": "EN",
+                        "currency": "USD",
+                        "page": "CHEKOUT",
+                        "pos": BOXEVER_POINT_OF_SALE,
+                        "email": email,
+                        "firstname": fname,
+                        "lastname": lname
+                    };
+                }
+
                 Boxever.eventCreate(identifyEvent, function (data) { }, 'json');
                 Swal.fire(`identified as: ${email}`)
             }
@@ -285,27 +314,6 @@
         var cdpProfileLink = 'https://app.boxever.com/#/guests/list?filter=customer&q=bid:' + unsafeWindow.Boxever.getID();
         unsafeWindow.open(cdpProfileLink, '_blank').focus();
 
-        // Swal.fire({
-        //     title: '<strong>Youre currently browsing as <u>Richard Flynn</u></strong>',
-        //     icon: 'info',
-        //     html:
-        //         'ID <b>123456789</b>, ' +
-        //         '<a id="cdpProfileRerirectBtn">CDP Profile</a> ',
-        //     showCloseButton: true,
-        //     showCancelButton: false,
-        //     focusConfirm: false,
-        //     confirmButtonText:
-        //         '<i class="fa fa-thumbs-up"></i> OK',
-        //     confirmButtonAriaLabel: 'Thumbs up, great!',
-        //     cancelButtonText:
-        //         '<i class="fa fa-thumbs-down"></i>',
-        //     cancelButtonAriaLabel: 'Thumbs down'
-        // })
-        // function cdpProfileRedirect() {
-        //     var cdpProfileLink = 'https://app.boxever.com/#/guests/list?filter=customer&q=bid:' + unsafeWindow.Boxever.getID();
-        //     unsafeWindow.open(cdpProfileLink, '_blank').focus();
-        // }
-        // document.getElementById("cdpProfileRerirectBtn").addEventListener("click", cdpProfileRedirect, false);
 
     });
 
