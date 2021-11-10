@@ -292,13 +292,13 @@
 
             };
             if (kv1 != null && kv1 != undefined && kv1 != "undefeined") {
-                bxEvent[kv1_values[0].trim()] = kv1_values[1].trim();
+                bxEvent[kv1_values[0]] = kv1_values[1];
             }
             if (kv2 != null && kv2 != undefined && kv2 != "undefeined") {
-                bxEvent[kv2_values[0].trim()] = kv2_values[1].trim();
+                bxEvent[kv2_values[0]] = kv2_values[1];
             }
             if (kv3 != null && kv3 != undefined && kv3 != "undefeined") {
-                bxEvent[kv3_values[0].trim()] = kv3_values[1].trim();
+                bxEvent[kv3_values[0]] = kv3_values[1];
             }
 
             Boxever.eventCreate(bxEvent, function (data) { }, 'json');
