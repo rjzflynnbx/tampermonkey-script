@@ -18,8 +18,14 @@
 
 
     // Client keys (do not change)
-    const PARTNER_SANDBOX_CLIENT_KEY = "psfu6uh05hsr9c34rptlr06dn864cqrx"
-    const SPINSHOP_CLIENT_KEY = "pqsSIOPAxhMC9zJLJSZNFURPNqALIFwd"
+    const PARTNER_SANDBOX_CLIENT_KEY = "psfu6uh05hsr9c34rptlr06dn864cqrx";
+    const SPINSHOP_CLIENT_KEY = "pqsSIOPAxhMC9zJLJSZNFURPNqALIFwd";
+    const LABS_CLIENT_KEY = "wjtc2eog1lvueo72kts3mn1ean0nentz"; //spinair
+    const SPIN_GAMING_CLIENT_KEY = "pqsGAMEJ9jsRlJMQPTrnpk0cGxD4ab70";
+    const SPINAIR_DC_CLIENT_KEY = "pqsDATA3lw12v5a9rrHPW1c4hET73GxQ";
+    const SPINFINANCE_CLIENT_KEY = "pqsFinGP4nW3iqC4JzgRMGZMgODLuDVM";
+    const SPINMEDIA_CLIENT_KEY = "pqsMedIa6PvIs50quSIOAPHcL0TJTQpk"; //spincom
+
 
     // Points of sale (do not change)
     const PARTNER_SANDBOX_DEFAULT_POS = "pos-demo";
