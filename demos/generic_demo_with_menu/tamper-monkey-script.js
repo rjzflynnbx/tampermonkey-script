@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         generic demo with menu
-// @namespace    http://tampermonkey.net/
+// @namespace    https://www.tampermonkey.net/
 // @version      0.1
 // @description  try to take over the world!
 // @author       You
@@ -114,10 +114,10 @@
         $('head').append('<link rel="stylesheet" href="' + url + '" type="text/css" />');
     }
     injectStylesheet("https://cdn.jsdelivr.net/npm/offside-js@1.4.0/dist/offside.css");
-    var htmlStr = "  <button style=\"display:none\" type=\"button\" id=\"my-button\">Offside toggle<\/button>  <nav id=\"my-menu\"> <img style=\"max-width: 85%; margin-bottom:1em;margin-left: 0.8em;\" src=\"https://sitecorecdn.azureedge.net/-/media/sitecoresite/images/global/logo/sitecore-logo.svg?la=en&hash=2134EC93C845A2DAC7C816F011AA5C52\" tabindex=\"-1\" alt=\"Sitecore Logo\"> <ul> <li id=\"browsingAsBtn\"><a  style=\"color:white\" href=\"#\">CDP Guest Profile<\/a><\/li>    <li id=\"startAsAnonBtn\"><a style=\"color:white\" href=\"#\">Start as Anon<\/a><\/li>   <li id=\"closeSessionBtn\"><a style=\"color:white\" href=\"#\">Close Session<\/a><\/li>    <li id=\"identifyBtn\" ><a style=\"color:white\" href=\"#\">Identify<\/a><\/li> <li id=\"sendEventBtn\" ><a style=\"color:white\" href=\"#\">Send Event<\/a><\/li> <\/ul>  <\/nav>  <!-- Your Content -->  <div id=\"my-content-container\">    <\/div>";
+    var htmlStr = "  <button style=\"display:none\" type=\"button\" id=\"my-button\">Offside toggle<\/button>  <nav id=\"my-menu\"> <img style=\"max-width: 85%; margin-bottom:1em;margin-left: 0.8em;\" src=\"https://sitecorecdn.azureedge.net/-/media/sitecoresite/images/global/logo/sitecore-logo.svg?la=en&hash=2134EC93C845A2DAC7C816F011AA5C52\" tabindex=\"-1\" alt=\"Sitecore Logo\"> <ul> <li id=\"browsingAsBtn\"> <a  style=\"color:white\" href=\"#\">CDP Guest Profile<\/a><\/li>    <li id=\"startAsAnonBtn\"><a style=\"color:white\" href=\"#\">Start as Anon<\/a><\/li>   <li id=\"closeSessionBtn\"><a style=\"color:white\" href=\"#\">Close Session<\/a><\/li>    <li id=\"identifyBtn\" ><a style=\"color:white\" href=\"#\">Identify<\/a><\/li> <li id=\"sendEventBtn\" ><a style=\"color:white\" href=\"#\">Send Event<\/a><\/li> <li id=\"addDataExtBtn\" ><a style=\"color:white\" href=\"#\">Add Data Extension<\/a><\/li> <li id=\"removeDataExtBtn\" ><a style=\"color:white\" href=\"#\">Remove Data Extension<\/a><\/li> <\/ul>  <\/nav>  <!-- Your Content -->  <div id=\"my-content-container\">    <\/div>";
     var element = document.getElementsByTagName("body")[0];
     element.insertAdjacentHTML('afterbegin', htmlStr);
-    // <li id=\"addDataExtBtn\" ><a style=\"color:white\" href=\"#\">Add Data Extension<\/a><\/li>
+
 
     var myOffside = offside('#my-menu', {
 
@@ -223,29 +223,144 @@
 
         Swal.fire({
             title: 'Add Data Extension',
-            html: `<input type="text" id="eventType" class="swal2-input" placeholder="Data Extension Name">
+            html: `<input type="text" id="dataExtName" class="swal2-input" placeholder="Data Extension Name">
                 <input type="text" id="dataExtKey" class="swal2-input" placeholder="data extension key">
-                <input type="text" id="kv1" class="swal2-input" placeholder="key,value">
-                <input type="text" id="kv2" class="swal2-input" placeholder="key,value">
-                <input type="text" id="kv3" class="swal2-input" placeholder="key,value">
-                <input type="text" id="kv4" class="swal2-input" placeholder="key,value">
-                <input type="text" id="kv5" class="swal2-input" placeholder="key,value">`,
+                <input type="text" id="_kv1" class="swal2-input" placeholder="key,value">
+                <input type="text" id="_kv2" class="swal2-input" placeholder="key,value">
+                <input type="text" id="_kv3" class="swal2-input" placeholder="key,value">
+                `,
             confirmButtonText: 'Add Data Extension',
             focusConfirm: false,
             showCancelButton: true,
             preConfirm: () => {
-                const login = Swal.getPopup().querySelector('#login').value
-                const password = Swal.getPopup().querySelector('#password').value
-                if (!login || !password) {
-                    Swal.showValidationMessage(`Please enter login and password`)
-                }
-                return { login: login, password: password }
+
+
             }
         }).then((result) => {
-            Swal.fire(`
-                Login: ${result.value.login}
-                Password: ${result.value.password}
-                `.trim())
+
+            var dataExtName = Swal.getPopup().querySelector('#dataExtName').value;
+            var dataExtKey = Swal.getPopup().querySelector('#dataExtKey').value;
+
+            const kv1 = Swal.getPopup().querySelector('#_kv1').value.trim();
+            const kv1_values = kv1.split(",");
+
+            const kv2 = Swal.getPopup().querySelector('#_kv2').value.trim();
+            const kv2_values = kv2.split(",");
+
+            const kv3 = Swal.getPopup().querySelector('#_kv3').value.trim();
+            const kv3_values = kv3.split(",");
+
+            Boxever.browserShow(Boxever.getID(), 0, function (response) {
+                var guestRef = response.customer.ref;
+
+                var dataObj = {};
+                if (kv1 != null && kv1 != undefined && kv1 != "undefeined") {
+                    dataObj[kv1_values[0]] = kv1_values[1];
+                }
+                if (kv2 != null && kv2 != undefined && kv2 != "undefeined") {
+                    dataObj[kv2_values[0]] = kv2_values[1];
+                }
+                if (kv3 != null && kv3 != undefined && kv3 != "undefeined") {
+                    dataObj[kv3_values[0]] = kv3_values[1];
+                }
+
+                fetch('https://w1x491x7ik.execute-api.eu-west-1.amazonaws.com/default/createDataExtension', {
+                    method: 'post',
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(
+                        {
+                            "guestRef": guestRef,
+                            "dataExtensionName": dataExtName,
+                            "dataExtensionKey": dataExtKey,
+                            "clientKey": unsafeWindow._boxever_settings.client_key,
+                            "data": dataObj
+                        }
+                    )
+                }).then(res => res.json())
+                    .then(res => {
+                        console.log("welllll " + res.success);
+                        if(res.success == true){
+                            Swal.fire(
+                                'Data Extension Created',
+                                '',
+                                'success'
+                              )
+                        } else {
+                            Swal.fire(
+                                'Error Creating Data Extension ask Richard Flynn why...',
+                                '',
+                                'error'
+                              )
+                        }
+                    });
+
+            }, 'json');
+
+            //alert(dataExtName);
+        })
+
+    });
+
+    $("#removeDataExtBtn").click(async function () {
+
+        Swal.fire({
+            title: 'Remove Data Extension',
+            html: `<input type="text" id="dataExtName" class="swal2-input" placeholder="Data Extension Name">
+                <input type="text" id="dataExtRef" class="swal2-input" placeholder="data extension Ref">
+                `,
+            confirmButtonText: 'Remove Data Extension',
+            focusConfirm: false,
+            showCancelButton: true,
+            preConfirm: () => {
+
+
+            }
+        }).then((result) => {
+
+            var dataExtName = Swal.getPopup().querySelector('#dataExtName').value;
+            var dataExtRef = Swal.getPopup().querySelector('#dataExtRef').value;
+
+            Boxever.browserShow(Boxever.getID(), 0, function (response) {
+                var guestRef = response.customer.ref;
+
+                fetch('https://w1x491x7ik.execute-api.eu-west-1.amazonaws.com/default/createDataExtension', {
+                    method: 'delete',
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(
+                        {
+                            "guestRef": guestRef,
+                            "dataExtensionName": dataExtName,
+                            "dataExtensionRef": dataExtRef,
+                            "clientKey": unsafeWindow._boxever_settings.client_key
+                        }
+                    )
+                }).then(res => res.json())
+                .then(res => {
+                    console.log("welllll " + res.success);
+                    if(res.success == true){
+                        Swal.fire(
+                            'Data Extension Removed',
+                            '',
+                            'success'
+                          )
+                    } else {
+                        Swal.fire(
+                            'Error Removing Data Extension ask Richard Flynn why...',
+                            '',
+                            'error'
+                          )
+                    }
+                });
+
+            }, 'json');
+
+            //alert(dataExtName);
         })
 
     });
@@ -370,7 +485,7 @@
 
                 Swal.fire({
                     title: 'Reload the page to browse as the new anon user',
-                    text: "You won't be able to revert this!",
+                    text: "",
                     //icon: 'warning',
                     showCancelButton: false,
                     confirmButtonColor: '#19a5a2',
