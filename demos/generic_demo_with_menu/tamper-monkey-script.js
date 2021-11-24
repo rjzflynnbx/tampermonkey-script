@@ -18,6 +18,8 @@
 
 
     // Client keys (do not change)
+    // You can use any of these client keys for the add/remvoe Data Extension functionality
+    // Orher client keys are not supported, ask Richaed Flynn to add a key if needed
     const PARTNER_SANDBOX_CLIENT_KEY = "psfu6uh05hsr9c34rptlr06dn864cqrx";
     const SPINSHOP_CLIENT_KEY = "pqsSIOPAxhMC9zJLJSZNFURPNqALIFwd";
     const LABS_CLIENT_KEY = "wjtc2eog1lvueo72kts3mn1ean0nentz"; //spinair
