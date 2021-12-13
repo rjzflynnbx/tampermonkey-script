@@ -10,6 +10,13 @@
 
 (function () {
     'use strict';
+
+
+    const CLIENT_KEY_ENUM = {
+        PARTNER_SANDBOX: "psfu6uh05hsr9c34rptlr06dn864cqrx",
+        BOXEVER_LABS_SPINAIR: "wjtc2eog1lvueo72kts3mn1ean0nentz"
+    }
+
     //Boxever settings
     const BOXEVER_CLIENT_KEY = "";
     const BOXEVER_POINT_OF_SALE = "";
