@@ -25,8 +25,8 @@
     const BOXEVER_JS_LIB_SRC = 'https://d1mj578wat5n4o.cloudfront.net/boxever-1.4.1.min.js';
 
     //Script settings
-    const ENABLE_KEYBOARD_SHORTCUTS = false;
-    const SEND_VIEW_EVENT = false;
+    const ENABLE_KEYBOARD_SHORTCUTS = true;
+    const SEND_VIEW_EVENT = true;
 
     window._boxever_settings = {
         client_key: BOXEVER_CLIENT_KEY,
