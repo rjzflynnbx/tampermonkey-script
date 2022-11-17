@@ -83,15 +83,15 @@
             "session_data": { "uri": unsafeWindow.location.pathname }
         };
         Boxever.eventCreate(viewEvent, function (data) { }, 'json');
-        const Toast = Swal.mixin({
+        const Toast = Sweetalert2.mixin({
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
             timer: 3000,
             timerProgressBar: true,
             didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                toast.addEventListener('mouseenter', Sweetalert2.stopTimer)
+                toast.addEventListener('mouseleave', Sweetalert2.resumeTimer)
             }
         })
 
@@ -166,7 +166,7 @@
     // START menu button listners *********************************************
     $("#identifyBtn").click(async function () {
 
-        Swal.fire({
+        Sweetalert2.fire({
             title: 'Send Identity Event',
             html: `<input type="text" id="bxEmail" class="swal2-input" placeholder="email">
                 <input type="text" id="bxFname" class="swal2-input" placeholder="first name">
@@ -176,15 +176,15 @@
             focusConfirm: false,
             showCancelButton: true,
             preConfirm: () => {
-                const email = Swal.getPopup().querySelector('#bxEmail').value;
-                const fname = Swal.getPopup().querySelector('#bxFname').value
-                const lname = Swal.getPopup().querySelector('#bxLname').value
+                const email = Sweetalert2.getPopup().querySelector('#bxEmail').value;
+                const fname = Sweetalert2.getPopup().querySelector('#bxFname').value
+                const lname = Sweetalert2.getPopup().querySelector('#bxLname').value
                 return { email: email, fname: fname, lname: lname }
             }
         }).then((result) => {
-            const email = Swal.getPopup().querySelector('#bxEmail').value;
-            const fname = Swal.getPopup().querySelector('#bxFname').value;
-            const lname = Swal.getPopup().querySelector('#bxLname').value;
+            const email = Sweetalert2.getPopup().querySelector('#bxEmail').value;
+            const fname = Sweetalert2.getPopup().querySelector('#bxFname').value;
+            const lname = Sweetalert2.getPopup().querySelector('#bxLname').value;
 
             if (email != null && email != undefined && email != "undefined" && email != "") {
 
@@ -222,14 +222,14 @@
                 }
 
                 Boxever.eventCreate(identifyEvent, function (data) { }, 'json');
-                Swal.fire(`identified as: ${email}`)
+                Sweetalert2.fire(`identified as: ${email}`)
             }
         })
     });
 
     $("#addDataExtBtn").click(async function () {
 
-        Swal.fire({
+        Sweetalert2.fire({
             title: 'Add Data Extension',
             html: `<input type="text" id="dataExtName" class="swal2-input" placeholder="Data Extension Name">
                 <input type="text" id="dataExtKey" class="swal2-input" placeholder="data extension key">
@@ -246,16 +246,16 @@
             }
         }).then((result) => {
 
-            var dataExtName = Swal.getPopup().querySelector('#dataExtName').value;
-            var dataExtKey = Swal.getPopup().querySelector('#dataExtKey').value;
+            var dataExtName = Sweetalert2.getPopup().querySelector('#dataExtName').value;
+            var dataExtKey = Sweetalert2.getPopup().querySelector('#dataExtKey').value;
 
-            const kv1 = Swal.getPopup().querySelector('#_kv1').value.trim();
+            const kv1 = Sweetalert2.getPopup().querySelector('#_kv1').value.trim();
             const kv1_values = kv1.split(",");
 
-            const kv2 = Swal.getPopup().querySelector('#_kv2').value.trim();
+            const kv2 = Sweetalert2.getPopup().querySelector('#_kv2').value.trim();
             const kv2_values = kv2.split(",");
 
-            const kv3 = Swal.getPopup().querySelector('#_kv3').value.trim();
+            const kv3 = Sweetalert2.getPopup().querySelector('#_kv3').value.trim();
             const kv3_values = kv3.split(",");
 
             Boxever.browserShow(Boxever.getID(), 0, function (response) {
@@ -291,13 +291,13 @@
                     .then(res => {
                         console.log("welllll " + res.success);
                         if(res.success == true){
-                            Swal.fire(
+                            Sweetalert2.fire(
                                 'Data Extension Created',
                                 '',
                                 'success'
                               )
                         } else {
-                            Swal.fire(
+                            Sweetalert2.fire(
                                 'Error Creating Data Extension ask Richard Flynn why...',
                                 '',
                                 'error'
@@ -314,7 +314,7 @@
 
     $("#removeDataExtBtn").click(async function () {
 
-        Swal.fire({
+        Sweetalert2.fire({
             title: 'Remove Data Extension',
             html: `<input type="text" id="dataExtName" class="swal2-input" placeholder="Data Extension Name">
                 <input type="text" id="dataExtRef" class="swal2-input" placeholder="data extension Ref">
@@ -328,8 +328,8 @@
             }
         }).then((result) => {
 
-            var dataExtName = Swal.getPopup().querySelector('#dataExtName').value;
-            var dataExtRef = Swal.getPopup().querySelector('#dataExtRef').value;
+            var dataExtName = Sweetalert2.getPopup().querySelector('#dataExtName').value;
+            var dataExtRef = Sweetalert2.getPopup().querySelector('#dataExtRef').value;
 
             Boxever.browserShow(Boxever.getID(), 0, function (response) {
                 var guestRef = response.customer.ref;
@@ -352,13 +352,13 @@
                 .then(res => {
                     console.log("welllll " + res.success);
                     if(res.success == true){
-                        Swal.fire(
+                        Sweetalert2.fire(
                             'Data Extension Removed',
                             '',
                             'success'
                           )
                     } else {
-                        Swal.fire(
+                        Sweetalert2.fire(
                             'Error Removing Data Extension ask Richard Flynn why...',
                             '',
                             'error'
@@ -375,7 +375,7 @@
 
     $("#sendEventBtn").click(async function () {
 
-        Swal.fire({
+        Sweetalert2.fire({
             title: 'Send CDP Event',
             html: `<input type="text" id="eventType" class="swal2-input" placeholder="eventType">
                 <input type="text" id="kv1" class="swal2-input" placeholder="key,value">
@@ -386,21 +386,21 @@
             showCancelButton: true,
             confirmButtonColor: '#19a5a2',
             preConfirm: () => {
-                const eventType = Swal.getPopup().querySelector('#eventType').value
-                const kv1 = Swal.getPopup().querySelector('#kv1').value
+                const eventType = Sweetalert2.getPopup().querySelector('#eventType').value
+                const kv1 = Sweetalert2.getPopup().querySelector('#kv1').value
                 if (!eventType) {
-                    Swal.showValidationMessage(`Please enter an event type`)
+                    Sweetalert2.showValidationMessage(`Please enter an event type`)
                 }
                 return { eventType: eventType, kv1: kv1 }
             }
         }).then((result) => {
-            const kv1 = Swal.getPopup().querySelector('#kv1').value.trim();
+            const kv1 = Sweetalert2.getPopup().querySelector('#kv1').value.trim();
             const kv1_values = kv1.split(",");
 
-            const kv2 = Swal.getPopup().querySelector('#kv2').value.trim();
+            const kv2 = Sweetalert2.getPopup().querySelector('#kv2').value.trim();
             const kv2_values = kv2.split(",");
 
-            const kv3 = Swal.getPopup().querySelector('#kv3').value.trim();
+            const kv3 = Sweetalert2.getPopup().querySelector('#kv3').value.trim();
             const kv3_values = kv3.split(",");
 
             var bxEvent = {
@@ -426,7 +426,7 @@
             }
 
             Boxever.eventCreate(bxEvent, function (data) { }, 'json');
-            Swal.fire(`Sent ${result.value.eventType} event to Sitecore CDP`.trim())
+            Sweetalert2.fire(`Sent ${result.value.eventType} event to Sitecore CDP`.trim())
         })
 
     });
@@ -441,7 +441,7 @@
 
     $("#closeSessionBtn").click(function () {
 
-        Swal.fire({
+        Sweetalert2.fire({
             title: 'Close session?',
             text: "This will end the ongoing CDP session...",
             icon: 'question',
@@ -464,7 +464,7 @@
 
                 Boxever.eventCreate(closeSessionEvent, function (data) { }, 'json');
                 // });
-                Swal.fire(
+                Sweetalert2.fire(
                     'Session Closed!',
                     'Your session has been closed.',
                     'success'
@@ -476,7 +476,7 @@
 
     $("#startAsAnonBtn").click(function () {
 
-        Swal.fire({
+        Sweetalert2.fire({
             title: 'Start a new anonymous session?',
             //text: "This will reload the page...",
             icon: 'question',
@@ -490,7 +490,7 @@
                 Boxever.reset();
                 //});
 
-                Swal.fire({
+                Sweetalert2.fire({
                     title: 'Reload the page to browse as the new anon user',
                     text: "",
                     //icon: 'warning',
